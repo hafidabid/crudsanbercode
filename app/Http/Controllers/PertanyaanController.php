@@ -7,8 +7,12 @@ use Illuminate\Http\Request;
 
 class PertanyaanController extends Controller
 {
-    function index(){
-        $listask = pertanyaan::all();
+    function index($id=0){
+        if($id==0){
+            $listask = pertanyaan::all();
+        }else{
+            $listask = pertanyaan::where('id',$id)->get();
+        }
         $countask = count($listask);
         for($x=0;$x<count($listask);$x++){
             $c = jawaban::where('id_pertanyaan',$listask[$x]["id"])->count();
@@ -19,6 +23,32 @@ class PertanyaanController extends Controller
             'countask'=>$countask
             ]);
         
+    }
+
+    function modify($id){
+        $pertanyaanku = pertanyaan::find($id);
+        return view('editform',[
+            'pertanyaanku'=>$pertanyaanku
+        ]);
+    }
+
+    function onModify(Request $request,$id){
+        pertanyaan::where('id',$id)->update([
+           'judul'=>$request->input('judul'),
+           'isi'=>$request->input('isi') 
+        ]);
+
+        $listask = pertanyaan::where('id',$id)->get();
+        $countask = count($listask);
+        for($x=0;$x<count($listask);$x++){
+            $c = jawaban::where('id_pertanyaan',$listask[$x]["id"])->count();
+            $listask[$x]["jmlh_jawaban"]=$c;
+        }
+        return view('frontview',[
+            'listask'=>$listask,
+            'countask'=>$countask
+            ]);
+
     }
 
     function create(){
@@ -38,4 +68,6 @@ class PertanyaanController extends Controller
             'countask'=>$countask
             ]);
     }
+
+    
 }

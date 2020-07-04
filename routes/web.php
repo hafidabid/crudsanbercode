@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('viewA');
 });
 
+Route::get('/pertanyaan/{id}/edit','PertanyaanController@modify');
 Route::get('/pertanyaan/create','PertanyaanController@create');
-Route::get('/pertanyaan','PertanyaanController@index');
+Route::get('/pertanyaan/{id?}','PertanyaanController@index');
 Route::post('/pertanyaan','PertanyaanController@store');
 Route::get('/a',function(){
     return view('frontview');
@@ -26,3 +27,4 @@ Route::get('/a',function(){
 
 Route::get('/jawaban/{pertanyaan_id}','JawabanController@index');
 Route::post('/jawaban/{pertanyaan_id}','JawabanController@create');
+Route::put('/pertanyaan/{id}','PertanyaanController@onModify');

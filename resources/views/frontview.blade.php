@@ -29,7 +29,7 @@ Daftar Pertanyaan dan jawaban
                       </p>
 
                       <p>
-                        <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
+                        <a href="/pertanyaan/{{$li->id}}/edit" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> edit</a>
                         <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
                         <span class="float-right">
                           <a href="/jawaban/{{$li->id}}" class="text-sm">
@@ -51,6 +51,7 @@ Daftar Pertanyaan dan jawaban
                             <div class="modal-body">
                               <form role="form" action="/jawaban/{{$li->id}}" method="post">
                               {{csrf_field()}}
+                              @method('PUT')
                               <div class="form-group">
                                 <label>Judul</label>
                                 <input type="text" class="form-control" placeholder="Enter ..." id ="judul" name="judul">
